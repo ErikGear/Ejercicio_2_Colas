@@ -66,15 +66,16 @@ class Queue {
 }
 
 //datos de entrada: COLA original de colores
-//datos de salidad: dos nuevas colas: una para loscolres con indice IMPAR y otra cola pra los colores con indice PAR
+//datos de salidad: dos nuevas colas: una para loscolores con indice IMPAR y otra cola para los colores con indice PAR
 
 function coloresParesImpares(cola) {
   const coloresPares = new Queue();
   const coloresImpares = new Queue();
 
   while (!cola.isEmpty()) {
-    const item = cola.dequeue();
     const indice = cola.length();
+    const item = cola.dequeue();
+    console.log("Indice: ", indice, "Item: ", item);
 
     if (indice % 2 === 0) {
       coloresPares.enqueue(item);
