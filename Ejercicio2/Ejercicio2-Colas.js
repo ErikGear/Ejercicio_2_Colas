@@ -66,10 +66,7 @@ class Queue {
     //el contendio original a ser necesario
     return [...this.#data];
   }
-
-  dequeueItem(index) {
-    return this.#data.slice(index, index + 1);
-  }
+  
 }
 
 //datos de entrada: TICKETS de atención
