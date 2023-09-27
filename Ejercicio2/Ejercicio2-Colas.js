@@ -67,51 +67,55 @@ class Queue {
     return [...this.#data];
   }
 
-  dequeueItem(index){
+  dequeueItem(index) {
     return this.#data.slice(index, index + 1);
   }
 }
 
 //datos de entrada: TICKETS de atención
 //datos de salida: nuevo cola sin los teckets falsos
-const queue = new Queue();
 
-cola = [ 
-  { user:"User1", ticket:true },
-  { user:"User1", ticket:true },
-  { user:"User2", ticket:true },
-  { user:"User3", ticket:false },
-  { user:"User4", ticket:true },
-  { user:"User5", ticket:false },
-  { user:"User6", ticket:false },
-  { user:"User7", ticket:true },
-  { user:"User8", ticket:true },
-  { user:"User9", ticket:true },
-  { user:"User10", ticket:false },
-  { user:"User11", ticket:true },
-];
+//cola incial
+const tickets = new Queue();
+tickets.enqueue({ user: "User1", ticket: true });
+tickets.enqueue({ user: "User2", ticket: true });
+tickets.enqueue({ user: "User3", ticket: false });
+tickets.enqueue({ user: "User4", ticket: true });
+tickets.enqueue({ user: "User5", ticket: false });
+tickets.enqueue({ user: "User6", ticket: false });
+tickets.enqueue({ user: "User7", ticket: true });
+tickets.enqueue({ user: "User8", ticket: true });
+tickets.enqueue({ user: "User9", ticket: true });
+tickets.enqueue({ user: "User10", ticket: false });
+tickets.enqueue({ user: "User11", ticket: true });
 
-function retirarColados(cola){
-  const colados = new Queue();
-  for (const item of cola) {
+function ticketsRealesColados(cola) {
+  const ticketsReales = new Queue();
+  const ticketsColados = new Queue();
+
+  while (!cola.isEmpty()) {
+    const item = cola.dequeue();
+
     if (item.ticket) {
-      queue.enqueue(item);
+      ticketsReales.enqueue(item);
+      cola.enqueue(item);
     } else {
-      colados.enqueue(item);
+      ticketsColados.enqueue(item);
     }
   }
 
-  return colados;
+  return [ticketsReales, ticketsColados];
 }
 
-const colados = retirarColados(cola);
+const [ticketsReales, ticketsColados] = ticketsRealesColados(tickets);
 
-//imprimiendo amabas colas
-
-//cola con tickets TRUE
-queue.toString();
-
+//imprimiendo cola orginal sin los colados
+console.log("Arreglo original, sin colados");
+tickets.toString()
 console.log("\n");
 
-//cola con tickets FALSE
-colados.toString();
+console.log("Tickets Reales");
+ticketsReales.toString();
+
+console.log("\n");
+ticketsColados.toString();
