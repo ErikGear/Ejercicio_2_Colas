@@ -74,6 +74,22 @@ class Queue {
 
 //datos de entrada: TICKETS de atención
 //datos de salida: nuevo cola sin los teckets falsos
+function ticketsRealesColados(cola) {
+  const ticketsReales = new Queue();
+  const ticketsColados = new Queue();
+
+  while (!cola.isEmpty()) {
+    const item = cola.dequeue();
+
+    if (item.ticket) {
+      ticketsReales.enqueue(item);
+    } else {
+      ticketsColados.enqueue(item);
+    }
+  }
+
+  return [ticketsReales, ticketsColados];
+}
 
 //cola incial
 const tickets = new Queue();
@@ -89,33 +105,17 @@ tickets.enqueue({ user: "User9", ticket: true });
 tickets.enqueue({ user: "User10", ticket: false });
 tickets.enqueue({ user: "User11", ticket: true });
 
-function ticketsRealesColados(cola) {
-  const ticketsReales = new Queue();
-  const ticketsColados = new Queue();
-
-  while (!cola.isEmpty()) {
-    const item = cola.dequeue();
-
-    if (item.ticket) {
-      ticketsReales.enqueue(item);
-      cola.enqueue(item);
-    } else {
-      ticketsColados.enqueue(item);
-    }
-  }
-
-  return [ticketsReales, ticketsColados];
-}
-
 const [ticketsReales, ticketsColados] = ticketsRealesColados(tickets);
 
-//imprimiendo cola orginal sin los colados
+//imprimiendo cola inicial
 console.log("Arreglo original, sin colados");
 tickets.toString()
 console.log("\n");
 
+//tickets Reales
 console.log("Tickets Reales");
 ticketsReales.toString();
 
-console.log("\n");
+//Tickets Retirados
+console.log("\nTickets Colados");
 ticketsColados.toString();
